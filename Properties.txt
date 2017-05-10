@@ -1,0 +1,8 @@
+username = dm_user_api@syngenta.aol.mock
+password = Synmock@2018!
+securitytoken = 18RPCYzZr2u2U8sbcmNxUxwf
+authEndPoint = https://test.salesforce.com/services/Soap/u/39.0
+proxyhost = 10.68.248.34
+proxyport = 80
+proxyuser = itlinfosys\rajesh.ramachandran
+proxypass = Shakthi#123
