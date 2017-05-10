@@ -1,0 +1,164 @@
+SFDC Role Name, Id
+ID_CU_Head,00E9E000000IDwTUAW
+CA_JAVA,00E9E000000IDwWUAW
+CA_SUM,00E9E000000IDwVUAW
+ID_Marketing_Head,00E9E000000IDwYUAW
+ID_Marketing_Head,00E9E000000IDwYUAW
+ID_Marketing_Head,00E9E000000IDwYUAW
+ID_Marketing_Head,00E9E000000IDwYUAW
+ID_Marketing_Head,00E9E000000IDwYUAW
+ID_Marketing_Head,00E9E000000IDwYUAW
+Campaign_Manager,00E9E000000IDyWUAW
+Campaign_Manager,00E9E000000IDyWUAW
+Campaign_Manager,00E9E000000IDyWUAW
+CA_SUM,00E9E000000IDwVUAW
+CA_EID,null
+CA_JAVA,00E9E000000IDwWUAW
+Sudarmanto,,Danang,Arie Hartoko,u483805,danang.arie_hartoko@syngenta.com,danang.arie_hartoko@syngenta.com.mock,u483805,"RSM – West JAVA
+FALSE,null
+AE_West_JAVA2,00E9E000000IDxqUAG
+AE_West_JAVA1,00E9E000000IDxpUAG
+AE_West_JAVA3,00E9E000000IDxrUAG
+Danang Arie Hartoko,,Iswadi,Prasetyo,u483840,iswadi.prasetyo@syngenta.com,iswadi.prasetyo@syngenta.com.mock,u483840,"DCM – Priangan
+FALSE,null
+Danang Arie Hartoko,,Ganda Liat,Rajagukguk,u693203,ganda.rajagukguk@syngenta.com,ganda.rajagukguk@syngenta.com.mock,u693203,"DCM – Pantura
+FALSE,null
+AGR_Pantura3,00E9E000000IDxKUAW
+AGR_Pantura2,00E9E000000IDxJUAW
+AGR_Priangan2,00E9E000000IDxNUAW
+AGR_Pantura1,00E9E000000IDxIUAW
+AGR_Priangan1,00E9E000000IDxMUAW
+AGR_Priangan3,00E9E000000IDxOUAW
+Sudarmanto,,Sukahar,Sukahar,u457625,sukahar.sukahar@syngenta.com,sukahar.sukahar@syngenta.com.mock,u457625,"RSM – Central JAVA
+FALSE,null
+AGR_East_Central_JAVA4,00E9E000000IDxWUAW
+AE_Central_JAVA1,00E9E000000IDxcUAG
+AE_Central_JAVA1,00E9E000000IDxcUAG
+AE_Central_JAVA1,00E9E000000IDxcUAG
+Sukahar Sukahar,,Khoirul,Abidin,u286944,khoirul.abidin@syngenta.com,khoirul.abidin@syngenta.com.mock,u286944,"DCM –West
+FALSE,null
+Sukahar Sukahar,,Arif,Abdullah,u693294,arif.abdullah@syngenta.com,arif.abdullah@syngenta.com.mock,u693294,"DCM –East
+FALSE,null
+AGR_East_Central_JAVA1,00E9E000000IDxTUAW
+AGR_East_Central_JAVA2,00E9E000000IDxUUAW
+AGR_East_Central_JAVA3,00E9E000000IDxVUAW
+AGR_West_Central_JAVA1,00E9E000000IDxYUAW
+AGR_West_Central_JAVA2,00E9E000000IDxZUAW
+AGR_West_Central_JAVA3,00E9E000000IDxaUAG
+AGR_West_Central_JAVA4,00E9E000000IDxbUAG
+S Sudarmanto,,Nur,Hidayat,u238609,nur.hidayat@syngenta.com,nur.hidayat@syngenta.com.mock,u238609,"RSM – East JAVA
+FALSE,null
+AE_West_JAVA2,00E9E000000IDxqUAG
+AE_West_JAVA1,00E9E000000IDxpUAG
+AE_West_JAVA3,00E9E000000IDxrUAG
+AE_West_JAVA4,null
+Nur Hidayat,,Bambang,Sutomo,u267743,bambang.sutomo@syngenta.com,bambang.sutomo@syngenta.com.mock,u267743,"DCM –East
+FALSE,null
+Nur Hidayat,,Aziz,Harjanto,u580510,aziz.harjanto@syngenta.com,aziz.harjanto@syngenta.com.mock,u580510,"DCM –West
+FALSE,null
+AGR_West_East_JAVA1,00E9E000000IDxkUAG
+AGR_West_East_JAVA1,00E9E000000IDxkUAG
+Bambang Sutomo,,Teguh,Hadisasmito,u138684,teguh.hadisasmito@syngenta.com,teguh.hadisasmito@syngenta.com.mock,u138684,"DCM –West
+FALSE,null
+Bambang Sutomo,,Dicky,Suhariadi,u672455,dicky.suhariadi@syngenta.com,dicky.suhariadi@syngenta.com.mock,u672455,"DCM –West
+FALSE,null
+Bambang Sutomo,,Budi,Hartono,u752029,budi.hartono@syngenta.com,budi.hartono@syngenta.com.mock,u752029,"DCM –West
+FALSE,null
+AGR_West_East_JAVA1,00E9E000000IDxkUAG
+AGR_West_East_JAVA1,00E9E000000IDxkUAG
+AGR_West_East_JAVA1,00E9E000000IDxkUAG
+Fauzi Tubat,,Dede,Sudrajat,u767164,dede.sudrajat@syngenta.com,dede.sudrajat@syngenta.com.mock,u767164,"RSM – North Sumatra
+FALSE,null
+AE_North_SUM1,00E9E000000IDwnUAG
+AE_North_SUM3,00E9E000000IDwpUAG
+AE_North_SUM2,00E9E000000IDwoUAG
+AE_North_SUM4,00E9E000000IDwqUAG
+DCM_North_SUM1,00E9E000000IDwcUAG
+DCM_North_SUM2,00E9E000000IDwiUAG
+Fauzi Tubat,,Irhamsyah,Irhamsyah,u688940,irhamsyah.irhamsyah@syngenta.com,irhamsyah.irhamsyah@syngenta.com.mock,u688940,"KAM Gramoxone
+FALSE,null
+AGR_North_SUM2-1,00E9E000000IDwjUAG
+AGR_North_SUM1-1,00E9E000000IDwdUAG
+AGR_North_SUM1-2,00E9E000000IDweUAG
+AGR_North_SUM2-2,00E9E000000IDwkUAG
+AGR_North_SUM2-3,00E9E000000IDwlUAG
+AGR_North_SUM2-4,00E9E000000IDwmUAG
+AGR_North_SUM1-3,00E9E000000IDwfUAG
+AGR_North_SUM2-5,null
+AGR_North_SUM2-6,null
+Fauzi Tubat,,Buldansyah,Buldansyah,u579362,buldansyah.buldansyah@syngenta.com,buldansyah.buldansyah@syngenta.com.mock,u579362,"RSM – Central Sumatra
+FALSE,null
+AE_Central_SUM3,00E9E000000IDx0UAG
+AE_Central_SUM2,00E9E000000IDwzUAG
+DCM_Central_SUM1,00E9E000000IDwrUAG
+AGR_Central_SUM1-1,00E9E000000IDwsUAG
+AGR_Central_SUM1-2,00E9E000000IDwtUAG
+AGR_Central_SUM1-5,null
+AE_Central_SUM1,00E9E000000IDwyUAG
+AGR_Central_SUM1-3,00E9E000000IDwuUAG
+AGR_Central_SUM1-4,null
+Fauzi Tubat,,Muhammad,Mafrukhin,u610533,muhammad.mafrukhin@syngenta.com,muhammad.mafrukhin@syngenta.com.mock,u610533,"RSM – South Sumatra
+FALSE,null
+AE_South_SUM3,00E9E000000IDxCUAW
+AE_South_SUM1,00E9E000000IDxAUAW
+AE_South_SUM2,00E9E000000IDxBUAW
+DCM_South_SUM1,00E9E000000IDx1UAG
+DCM_South_SUM2,00E9E000000IDx6UAG
+AGR_South_SUM1-1,00E9E000000IDx2UAG
+AGR_South_SUM1-2,00E9E000000IDx3UAG
+AGR_South_SUM1-3,00E9E000000IDx4UAG
+AGR_South_SUM2-1,00E9E000000IDx7UAG
+AGR_South_SUM2-2,00E9E000000IDx8UAG
+AGR_South_SUM2-3,00E9E000000IDx9UAG
+AGR_South_SUM2-4,null
+Fauzi Tubat,,Maulana ,Ansori,u614397,maulana.ansori@syngenta.com,maulana.ansori@syngenta.com.mock,U614397,"RSM – Kalimantan
+FALSE,null
+Maulana Ansori,,Umi ,Ginanto,u613830,umi.ginanto@syngenta.com,umi.ginanto@syngenta.com.mock,U613830,"DCM – Kal1
+FALSE,null
+Maulana Ansori,,Andi ,Muchtar Makkuasa,u801676,andi_muchtar.makkuasa@syngenta.com,andi_muchtar.makkuasa@syngenta.com.mock,U801676,"DCM – Kal2
+FALSE,null
+AE_KAL1,00E9E000000IDy5UAG
+AGR_KAL1-1,00E9E000000IDxvUAG
+AGR_KAL1-2,00E9E000000IDxwUAG
+AGR_KAL1-3,00E9E000000IDxxUAG
+AGR_KAL1-4,00E9E000000IDxyUAG
+AGR_KAL2-1,00E9E000000IDy2UAG
+AGR_KAL2-2,00E9E000000IDy3UAG
+AGR_KAL1-5,00E9E000000IDxzUAG
+AGR_KAL1-6,00E9E000000IDy0UAG
+Andi Muchtar Makkuasa,,Indra ,Ardiansyah,u801688,indra_ardiansyah.wahyu@syngenta.com,indra_ardiansyah.wahyu@syngenta.com.mock,U801688,AGR,AGR_KAL2-3,,Baseline Sales Profile,00e0E000000HfKAQA0,APAC,,ID,,FALSE,FALSE,62561743423,,62561743423,6.29E+12,,,,,,Indonesia,id,"Perum Khansa Residence Kav.10, Jl. Kenan Sandan RT:40 RW:07 Kel.Baamang Tengah, 
+Kec. Baamang, Kab. Kotawaringin Timur (Sampit)
+
+en_US,null
+AE_KAL2,00E9E000000IDy6UAG
+Fauzi Tubat,,Bahtiar,Bahtiar,u341250,bahtiar.a@syngenta.com,bahtiar.a@syngenta.com.mock,u341250,"RSM – Sulawesi
+",RSM_SUL,,Baseline Sales Profile,00e0E000000HfKAQA0,APAC,,ID,,FALSE,FALSE,,,,+62811 446324,,,,,,Indonesia,id,"Jalan Daeng Ramang Kompleks Ruko 237 No. 11  (Kompeks Ruko Orange / Depan Pesantren) 
+Kelurahan Sudiang Raya Kec. Biringkanya
+en_US,null
+Bahtiar,,Muhammad,Tahir,u590583,muhammad.tahir-1@syngenta.com,muhammad.tahir-1@syngenta.com.mock,u590583,DCM - Sul2,DCM_SUL2,,Baseline Sales Profile,00e0E000000HfKAQA0,APAC,,ID,,FALSE,FALSE,,,,6.28E+11,,,,,,Indonesia,id,"Jalan Daeng Ramang Kompleks Ruko 237 No. 11  (Kompeks Ruko Orange / Depan Pesantren) 
+Kelurahan Sudiang Raya Kec. Biringkanya
+en_US,null
+Bahtiar,,Ade,Wahyudi,u587860,ade.wahyudi@syngenta.com,ade.wahyudi@syngenta.com.mock,u587860,DCM - Sul1,DCM_SUL1,,Baseline Sales Profile,00e0E000000HfKAQA0,APAC,,ID,,FALSE,FALSE,,,,6.28E+11,,,,,,Indonesia,id,"Jalan Daeng Ramang Kompleks Ruko 237 No. 11  (Kompeks Ruko Orange / Depan Pesantren) 
+Kelurahan Sudiang Raya Kec. Biringkanya
+en_US,null
+AGR_SUL1-1,00E9E000000IDy9UAG
+Bahtiar,,Syamsul,Bakri,u587888,syamsul.bakri@syngenta.com,syamsul.bakri@syngenta.com.mock,u587888,AE,AE_SUL1,,Baseline Sales Profile,00e0E000000HfKAQA0,APAC,,ID,,FALSE,FALSE,,,,6.28E+11,,,,,,Indonesia,id,"Jalan Daeng Ramang Kompleks Ruko 237 No. 11  (Kompeks Ruko Orange / Depan Pesantren) 
+Kelurahan Sudiang Raya Kec. Biringkanya
+en_US,null
+AGR_SUL2-1,00E9E000000IDyDUAW
+AE_SUL2,00E9E000000IDyGUAW
+Bahtiar,,Iwan,Iwan,u839263,Iwan.Iwan@syngenta.com,Iwan.Iwan@syngenta.com.mock,u839263,AE,AE_SUL3,,Baseline Sales Profile,00e0E000000HfKAQA0,APAC,,ID,,FALSE,FALSE,,,,6.28E+12,,,,,,Indonesia,id,"Jalan Daeng Ramang Kompleks Ruko 237 No. 11  (Kompeks Ruko Orange / Depan Pesantren) 
+Kelurahan Sudiang Raya Kec. Biringkanya
+en_US,null
+AE_SUL4,00E9E000000IDyIUAW
+AE_SUL5,00E9E000000IDyJUAW
+Ade Wahyudi,,Hasan,Basri,u749224,hasan.basri@syngenta.com,hasan.basri@syngenta.com.mock,u749224,AGR Sul1,AGR_SUL1-2,,Baseline Sales Profile,00e0E000000HfKAQA0,APAC,,ID,,FALSE,FALSE,,,,6.28E+11,,,,,,Indonesia,id,"Jalan Daeng Ramang Kompleks Ruko 237 No. 11  (Kompeks Ruko Orange / Depan Pesantren) 
+Kelurahan Sudiang Raya Kec. Biringkanya
+en_US,null
+AGR_SUL1-3,00E9E000000IDyBUAW
+AGR_SUL1-4,null
+Fauzi Tubat,,Khusaeri,Khusaeri,u589267,khus.khusaeri@syngenta.com,khus.khusaeri@syngenta.com.mock,u589267,"RSM – NUSRA
+FALSE,null
+AE_NUSRA1,00E9E000000IDyNUAW
+AE_NUSRA2,00E9E000000IDyOUAW
+AGR_NUSRA1,00E9E000000IDyLUAW

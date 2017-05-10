@@ -35,20 +35,24 @@ public class vlookup {
     String proxyuser;
     String proxypass;
     String authEndPoint;
+    String csvColumnToSearch;
+    String ObjectToLookup;
+    String traceDebug;
     
 	public static void main(String[] args) {
 		vlookup vl = new vlookup();
-		System.out.println("This is a lightweight utility to lookup Salesforce Ids based on search field. \nIt is built to query data like Profiles,Roles etc where total row count is less than 50,000");
-		System.out.println("If querying an object like Account which has large amount of records,\n please add a filter criteria to reduce data taken from Salesforce for analysis to below 50,000 records");
+		System.out.println("##############################################################################");
+		System.out.println("This is a lightweight utility to lookup Salesforce Ids based on a search field. \n It is built to query data like Profiles,Roles etc where total row count is less than 50,000");
+		System.out.println("If querying an object like Account which has large amount of records,\n please add a filter criteria to reduce data taken from Salesforce for analysis. \n Ideally query should bring less than 50,000 records");
+		System.out.println("############################################################################## \n \n \n");
 		vl.getProperties();
 		if (vl.login() == true){
 			vl.getLookupFields();			
+			vl.updateOutputData();
 		}
 		else {
 			System.out.println("login failed. Please check supplied login credentials and proxy details");
 		};
-		vl.updateOutputData();
-		
 	}
 	
 	private String getUserInput(String prompt) {
@@ -79,9 +83,10 @@ public class vlookup {
 				    proxyport = prop.getProperty("proxyport");
 				    proxyuser = prop.getProperty("proxyuser");
 				    proxypass = prop.getProperty("proxypass");
+				    traceDebug = prop.getProperty("DebugLogin");
 				}
 				catch (IOException ex) {
-						System.out.println("Properties.txt does not exist or does not have required data");
+						System.out.println("\n Properties.txt does not exist or does not have required data");
 						ex.printStackTrace();
 					} finally {
 						if (input != null) {
@@ -99,21 +104,21 @@ public class vlookup {
         boolean success = false;
         System.out.println(username);
         if (username == null || username.equals(""))
-        	username = getUserInput("Enter username: ");
+        	username = getUserInput("\n Enter username: ");
         if (password == null || password.equals(""))
-        	password = getUserInput("Enter password: ");
+        	password = getUserInput("\n Enter password: ");
         if (proxyhost == null || proxyhost.equals(""))
-        	proxyhost = getUserInput("Enter proxy host address: ");
+        	proxyhost = getUserInput("\n Enter proxy host address: ");
         if (proxyport == null || proxyport.equals(""))
-        	proxyport = getUserInput("Enter proxy host port: ");
+        	proxyport = getUserInput("\n Enter proxy host port: ");
         Integer intProxyPort = 80;
         if (proxyport != null && proxyport.length() != 0){
         	intProxyPort = Integer.valueOf(proxyport);        	
         }
         if (proxyuser == null || proxyuser.equals(""))
-        	proxyuser = getUserInput("Enter proxy authentication user name: ");
+        	proxyuser = getUserInput("\n Enter proxy authentication user name: ");
         if (proxypass == null || proxypass.equals(""))
-        	proxypass = getUserInput("Enter proxy authentication password: ");
+        	proxypass = getUserInput("\n Enter proxy authentication password: ");
         if (authEndPoint == null || authEndPoint.equals(""))
         	authEndPoint = "https://login.salesforce.com/services/Soap/u/39.0";
         try {
@@ -121,17 +126,24 @@ public class vlookup {
           config.setUsername(username);
           config.setPassword(password);
           config.setAuthEndpoint(authEndPoint);
-          config.setTraceFile("traceLogs.txt");
-     //     config.setTraceMessage(true);
-     //     config.setPrettyPrintXml(true);
+          if (traceDebug != null && traceDebug.toUpperCase().equals("TRUE")){
+              config.setTraceFile("traceLogs.txt");
+              config.setTraceMessage(true);
+              config.setPrettyPrintXml(true);
+          }
           if (proxyhost != null && (!proxyhost.equals(""))){
               config.setProxy(proxyhost, intProxyPort);
               config.setProxyUsername(proxyuser);
               config.setProxyPassword(proxypass);
           }
-		  String filename = getUserInput("Enter name of csv input file: ");
-		  filename = filename + ".csv";
+		  String filename = getUserInput("\n Enter name of csv input file: ");
+		  if (!filename.endsWith(".csv"))
+			  filename = filename + ".csv";
 		  csvFile = filename;
+		  csvColumnToSearch = getUserInput("\n Enter column number of field data to use for search (ex: A or M): ");
+		  if (csvColumnToSearch == null || csvColumnToSearch.equals("")){
+			  return false;
+		  }
           partnerConnection = Connector.newConnection(config);
           success = true;
         } catch (ConnectionException ce) {
@@ -154,9 +166,9 @@ public class vlookup {
 		}	 
 		
 	  private void getLookupFields(){
-		  String ObjectToLookup = getUserInput("Enter object api name to lookup: ");
-		  String FieldToSearch = getUserInput("Enter field api name to search with: ");
-	      String addFilterCriteria = getUserInput("If this object has lot of data, please enter an additional criteria to add in search soql: (ex: Country__c like '%US%' ) ");
+		  ObjectToLookup = getUserInput("\n Enter object api name to lookup (Case sensitive) : ");
+		  String FieldToSearch = getUserInput("\n Enter field api name to search with (Case sensitive) : ");
+	      String addFilterCriteria = getUserInput("\n If this object has lot of data, please enter an additional criteria to add in search soql: (ex: Country__c like '%US%'):  ");
 	      
 	      // Set query batch size
           partnerConnection.setQueryOptions(2000);
@@ -178,7 +190,7 @@ public class vlookup {
 	          int loopCount = 0;
 	          // Loop through the batches of returned results
 	          while (!done) {
-	                System.out.println("Querying data .." + loopCount++);
+	                System.out.println("\n Querying data .." + loopCount++);
 	                SObject[] records = qr.getRecords();
 	                // Process the query results
 	                for (int i = 0; i < records.length; i++) {
@@ -197,31 +209,61 @@ public class vlookup {
 			e1.printStackTrace();
 		} 
 		
-		System.out.println("\nQuery execution completed.");
+		System.out.println("\n Query execution completed.");
 		try {
 			partnerConnection.logout();
 		} catch (ConnectionException e1) {
 			e1.printStackTrace();
 		}
 	  }
+	  
+		private static short convert2ColumnIndex(String columnName) {
+			columnName = columnName.toUpperCase();
+			short value = 0;
+			for (int i = 0, k = columnName.length() - 1; i < columnName.length(); i++, k--) {
+				int alpabetIndex = ((short) columnName.charAt(i)) - 64;
+				int delta = 0;
+				// last column simply add it
+				if (k == 0) {
+					delta = alpabetIndex - 1;
+				} else { // aggregate
+					if (alpabetIndex == 0)
+						delta = (26 * k);
+					else
+						delta = (alpabetIndex * 26 * k);					
+				}
+				value += delta;
+			}
+			return value;
+		}
+		
 	  private void updateOutputData(){
-	      	String line = "";
-	      	Path p = Paths.get(csvFile); 
+
+		    String line = "";
+	    
+		    Path p = Paths.get(csvFile); 
 			List<String> fileContent;
 			try {
 				
 				fileContent = new ArrayList<>(Files.readAllLines(p, StandardCharsets.UTF_8));
+                Short inputSearchNumber = convert2ColumnIndex(csvColumnToSearch);
+                System.out.println(inputSearchNumber);
 				for (int i = 0; i < fileContent.size(); i++) {
 				    if ((line = fileContent.get(i)) != null) {
 		                String[] inputdata = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
-		                String inputfieldvalue = inputdata[0].replace("\"","");
-		                System.out.println("Input field = " + inputfieldvalue + " " + getKeyByValue(inputMap, inputdata[0].toString().replace("\"","")));
-		                if (inputdata[0] != null && inputdata[0] != ""){
-		                	if (i == 0){
-			                	fileContent.set(i, inputdata[0] + ", Id");		                		
-		                	}
-		                	else
-			                	fileContent.set(i, inputdata[0] + "," + getKeyByValue(inputMap, inputdata[0].toString().replace("\"","")));
+		                String inputfieldvalue = "";
+		                if (inputdata.length >= inputSearchNumber){
+			                if (inputdata[inputSearchNumber] != null && !inputdata[inputSearchNumber].equals("")){
+				                inputfieldvalue = inputdata[inputSearchNumber].replace("\"","");
+				                System.out.println("Input field = " + inputfieldvalue + " " + getKeyByValue(inputMap, inputdata[inputSearchNumber].toString().replace("\"","")));
+				                if (inputdata[inputSearchNumber] != null && inputdata[inputSearchNumber] != ""){
+				                	if (i == 0){
+					                	fileContent.set(i, line + "," + ObjectToLookup + ".Id");		                		
+				                	}
+				                	else
+					                	fileContent.set(i, line + "," + getKeyByValue(inputMap, inputdata[inputSearchNumber].toString().replace("\"","")));
+				                }
+			                }
 		                }
 
 				    }
@@ -229,9 +271,10 @@ public class vlookup {
 			Files.write(p, fileContent, StandardCharsets.UTF_8);
 			}
 			catch(IOException e){
-				System.out.println("Unable to open file and update it. Please check if Input file is correctly populated.");
+				System.out.println("\n Unable to open file and update it. Please check if Input file is correctly populated.");
 				e.printStackTrace();
 			}
+
 	  }
 	  
 }
