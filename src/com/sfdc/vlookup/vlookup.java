@@ -1,5 +1,10 @@
 package com.sfdc.vlookup;
 
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,12 +16,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Properties;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 import com.sforce.soap.partner.*;
 import com.sforce.soap.partner.sobject.SObject;
@@ -30,22 +44,30 @@ public class vlookup {
     String csvFile ;
     String username;
     String password;
+    String securitytoken;
     String proxyhost;
     String proxyport;
     String proxyuser;
     String proxypass;
     String authEndPoint;
+    String filename;
     String csvColumnToSearch;
     String ObjectToLookup;
+    String FieldToSearch;
+    String SecondFieldToSearch;    
+    String addFilterCriteria;
     String traceDebug;
+    String casesensitive = "Y";
+    JLabel StatusLabel = new JLabel("Please fill detail as necessary and click the button. Required fields are highlighted in Red");
+
     //we start here
 	public static void main(String[] args) {
 		vlookup vl = new vlookup();
-		System.out.println("##############################################################################");
-		System.out.println("This is a lightweight utility to lookup Salesforce Ids based on a search field. \n It is built to query data like Profiles,Roles etc where total row count is less than 50,000");
-		System.out.println("If querying an object like Account which has large amount of records,\n please add a filter criteria to reduce data taken from Salesforce for analysis. \n Ideally query should bring less than 50,000 records");
-		System.out.println("############################################################################## \n \n \n");
 		vl.getProperties();
+		vl.createUI(vl);
+	}
+
+	private void executeLogic(vlookup vl){
 		if (vl.login() == true){
 			vl.getLookupFields();			
 			vl.updateOutputData();
@@ -54,30 +76,158 @@ public class vlookup {
 			System.out.println("login failed. Please check supplied login credentials and proxy details");
 		};
 	}
+	private void createUI(vlookup vl){
+		JFrame guiFrame = new JFrame();
+		guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        guiFrame.setTitle("Vlookup Salesforce");
+        JLabel msglabel1 = new JLabel("This is a lightweight utility to lookup Salesforce Ids based on a search field.", JLabel.CENTER);
+        JLabel msglabel2 = new JLabel("It is built to query data like Profiles,Roles etc where total row count is less than 50,000.", JLabel.CENTER);
+        JLabel msglabel3 = new JLabel(" If querying an object like Account which has large amount of records, please add a filter criteria to reduce data taken from Salesforce.", JLabel.CENTER);
+        JLabel msglabel4 = new JLabel("Please keep number of records queried below 100000.");
+        JLabel msglabel5 = new JLabel("Some details below are populated by reading the Properties.txt in your folder.");
+        msglabel5.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+        JLabel statuslabel1 = new JLabel("Progress:");
+        StatusLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        JLabel UserNameLabel = new JLabel("Enter salesforce org user name: ");
+        JTextField UserNameText = new JTextField(username, 20);
+        UserNameLabel.setBorder(BorderFactory.createLineBorder(Color.RED));
+        JLabel UserPwdLabel = new JLabel("Enter salesforce org user password: ");
+        JPasswordField UserPwdText = new JPasswordField(password, 20);
+        UserPwdLabel.setBorder(BorderFactory.createLineBorder(Color.RED));
+        JLabel UserSecTokLabel = new JLabel("Enter salesforce org user security token: ");
+        JTextField UserSecTokText = new JTextField(securitytoken, 20);
+        UserSecTokLabel.setBorder(BorderFactory.createLineBorder(Color.RED));
+        JLabel SandboxLabel = new JLabel("Enter Y if this is Sandbox, else enter N: ");
+        JTextField SandboxText = new JTextField("N", 1);
+        JLabel ProxyhostLabel = new JLabel("Enter proxy host (leave blank if no proxy): ");
+        JTextField ProxyhostText = new JTextField(proxyhost, 10);
+        ProxyhostLabel.setBorder(BorderFactory.createLineBorder(Color.RED));
+        JLabel ProxyPortLabel = new JLabel("Enter proxy port: ");
+        JTextField ProxyPortText = new JTextField(proxyport, 2);
+        JLabel ProxyUserLabel = new JLabel("Enter proxy user name: ");
+        JTextField ProxyUserText = new JTextField(proxyuser, 10);
+        JLabel ProxyPwdLabel = new JLabel("Enter proxy user password: ");
+        JPasswordField ProxyPwdText = new JPasswordField(proxypass, 10);
+        JLabel fileLabel = new JLabel("Enter name of input csv file in this directory:");
+        JTextField fileText = new JTextField("",10);
+        fileLabel.setBorder(BorderFactory.createLineBorder(Color.RED));
+        JLabel ButtonLabel = new JLabel("Click this button after you filled any necessary information");
+        JTextField csvColumnText = new JTextField("",10);
+        JLabel csvColumnLabel = new JLabel("Enter column name that needs to be used for search (Ex: A or M):");
+        csvColumnLabel.setBorder(BorderFactory.createLineBorder(Color.RED));
+        JTextField objectText = new JTextField("",10);
+        JLabel objectLabel = new JLabel("Enter the object api name you want to search (Case sensitive):");
+        objectLabel.setBorder(BorderFactory.createLineBorder(Color.RED));
+        JTextField Field1Text = new JTextField("",10);
+        JLabel Field1Label = new JLabel("Enter the field api name you want to search with (Case sensitive):");
+        JTextField Field2Text = new JTextField("",10);
+        Field1Label.setBorder(BorderFactory.createLineBorder(Color.RED));
+        JLabel Field2Label = new JLabel("If you want to search with two fields, enter 2nd field api name (Case sensitive):");
+        JTextField filterText = new JTextField("",10);
+        JLabel filterLabel = new JLabel("Enter a filter criteria if you are querying huge amount of data (for ex: shippingcountrycode = 'US'):");
+        JTextField caseText = new JTextField("Y",1);
+        JLabel caseLabel = new JLabel("Should matching be case insenstive? (If not, enter N)");
+      
+        JButton button = new JButton("Click Me");
+        JPanel panel1 = new JPanel();
+        GridLayout layout1 = new GridLayout(0,2);
+        panel1.setLayout(layout1);
+        layout1.setHgap(5);
+        layout1.setVgap(5);
+        panel1.add(UserNameLabel);
+        panel1.add(UserNameText);
+        panel1.add(UserPwdLabel);
+        panel1.add(UserPwdText);
+        panel1.add(UserSecTokLabel);
+        panel1.add(UserSecTokText);
+        panel1.add(SandboxLabel);
+        panel1.add(SandboxText);
+        panel1.add(ProxyhostLabel);
+        panel1.add(ProxyhostText);
+        panel1.add(ProxyPortLabel);
+        panel1.add(ProxyPortText);
+        panel1.add(ProxyUserLabel);
+        panel1.add(ProxyUserText);
+        panel1.add(ProxyPwdLabel);
+        panel1.add(ProxyPwdText);
+        panel1.add(fileLabel);
+        panel1.add(fileText);
+        panel1.add(csvColumnLabel);
+        panel1.add(csvColumnText);
+        panel1.add(objectLabel);
+        panel1.add(objectText);
+        panel1.add(Field1Label);
+        panel1.add(Field1Text);
+        panel1.add(Field2Label);
+        panel1.add(Field2Text);
+        panel1.add(filterLabel);
+        panel1.add(filterText);
+        panel1.add(caseLabel);
+        panel1.add(caseText);        
+        panel1.add(ButtonLabel);
+        panel1.add(button);
+        panel1.add(statuslabel1);
+        panel1.add(StatusLabel);
+        guiFrame.setLayout(new FlowLayout());
+        guiFrame.add(msglabel1);
+        guiFrame.add(msglabel2);
+        guiFrame.add(msglabel3);
+        guiFrame.add(msglabel4);
+        guiFrame.add(msglabel5);
+        JPanel controlPanel = new JPanel();
+        controlPanel.setLayout(new FlowLayout());
+        guiFrame.add(controlPanel);
+        controlPanel.add(panel1);
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+			    username = UserNameText.getText();
+			    char[] passwordarray = UserPwdText.getPassword();
+			    password = Arrays.toString(passwordarray);
+			    password = password.substring(1, password.length() - 1).replace(",", "").replace(" ", "");
+			    securitytoken = UserSecTokText.getText();
+			    if (SandboxText.getText().equals("Y")){
+			    	 authEndPoint = "https://test.salesforce.com/services/Soap/u/39.0";
+			    }
+			    else if (!SandboxText.getText().equals("")){
+			    	authEndPoint = "https://login.salesforce.com/services/Soap/u/39.0";
+			    }
+			    StatusLabel.setText("Working!");
+			    proxyhost = ProxyhostText.getText();
+			    proxyport = ProxyPortText.getText();
+			    proxyuser = ProxyUserText.getText();
+			    char[] proxypassarray = ProxyPwdText.getPassword();
+			    proxypass = Arrays.toString(proxypassarray);
+			    proxypass = proxypass.substring(1, proxypass.length() - 1).replace(",", "").replace(" ", "");
+			    filename = fileText.getText();
+			    csvColumnToSearch = csvColumnText.getText();
+			    ObjectToLookup = objectText.getText();
+			    FieldToSearch = Field1Text.getText();
+			    SecondFieldToSearch = Field2Text.getText();
+			    addFilterCriteria = filterText.getText();
+			    if (caseText.getText().equals("N")){
+			    	casesensitive = "N";
+			    }
+			    else
+			    	casesensitive = "Y";
+			    vl.executeLogic(vl);
+            }          
+         });
+        guiFrame.setVisible(true);
+        guiFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        return;
+	}
 	
-	private String getUserInput(String prompt) {
-        String result = "";
-        try {
-          System.out.print(prompt);
-          result = reader.readLine();
-        } catch (IOException ioe) {
-          ioe.printStackTrace();
-        }
-        return result;
-    }
-
 	private void getProperties(){
 		Properties prop = new Properties();
 		InputStream input = null;
-		String checkProperties = getUserInput("Enter Y if Properties.txt is present with login credentials, else enter N: ");
-		if (checkProperties.equals("Y")){
 			try {
 					input = new FileInputStream("Properties.txt");
 					// load a properties file
 					prop.load(input);
 					// get the property value and print it out
 				    username = prop.getProperty("username");
-				    password = prop.getProperty("password") + prop.getProperty("securitytoken");
+				    password = prop.getProperty("password");
+				    securitytoken = prop.getProperty("securitytoken");
 				    authEndPoint = prop.getProperty("authEndPoint");
 				    proxyhost = prop.getProperty("proxyhost");
 				    proxyport = prop.getProperty("proxyport");
@@ -87,7 +237,7 @@ public class vlookup {
 				}
 				catch (IOException ex) {
 						System.out.println("\n Properties.txt does not exist or does not have required data");
-						ex.printStackTrace();
+						//ex.printStackTrace();
 					} finally {
 						if (input != null) {
 							try {
@@ -97,34 +247,22 @@ public class vlookup {
 							}
 						}
 			}
-		}
 	}
 	
 	private boolean login() {
         boolean success = false;
-        System.out.println(username);
-        if (username == null || username.equals(""))
-        	username = getUserInput("\n Enter username: ");
-        if (password == null || password.equals(""))
-        	password = getUserInput("\n Enter password: ");
-        if (proxyhost == null || proxyhost.equals(""))
-        	proxyhost = getUserInput("\n Enter proxy host address: ");
-        if (proxyport == null || proxyport.equals(""))
-        	proxyport = getUserInput("\n Enter proxy host port: ");
         Integer intProxyPort = 80;
         if (proxyport != null && proxyport.length() != 0){
         	intProxyPort = Integer.valueOf(proxyport);        	
         }
-        if (proxyuser == null || proxyuser.equals(""))
-        	proxyuser = getUserInput("\n Enter proxy authentication user name: ");
-        if (proxypass == null || proxypass.equals(""))
-        	proxypass = getUserInput("\n Enter proxy authentication password: ");
         if (authEndPoint == null || authEndPoint.equals(""))
         	authEndPoint = "https://login.salesforce.com/services/Soap/u/39.0";
+        	
         try {
+        	StatusLabel.setText("Attempting to login");
           ConnectorConfig config = new ConnectorConfig();
           config.setUsername(username);
-          config.setPassword(password);
+          config.setPassword(password + securitytoken);
           config.setAuthEndpoint(authEndPoint);
           if (traceDebug != null && traceDebug.toUpperCase().equals("TRUE")){
               config.setTraceFile("traceLogs.txt");
@@ -136,21 +274,22 @@ public class vlookup {
               config.setProxyUsername(proxyuser);
               config.setProxyPassword(proxypass);
           }
-		  String filename = getUserInput("\n Enter name of csv input file: ");
 		  if (!filename.endsWith(".csv"))
 			  filename = filename + ".csv";
 		  csvFile = filename;
-		  csvColumnToSearch = getUserInput("\n Enter column number of field data to use for search (ex: A or M): ");
 		  if (csvColumnToSearch == null || csvColumnToSearch.equals("")){
-			  return false;
+			  StatusLabel.setText("All necessary details not provided");
+			  return success;
 		  }
           partnerConnection = Connector.newConnection(config);
           success = true;
         } catch (ConnectionException ce) {
           success= false;
+      	StatusLabel.setText("login failed. For details check stack trace in cmd prompt window");
           ce.printStackTrace();
         } catch (FileNotFoundException fnfe) {
           success = false;
+         StatusLabel.setText("no input file found. For details check stack trace in cmd prompt window");
           fnfe.printStackTrace();
         }
         return success;
@@ -166,22 +305,21 @@ public class vlookup {
 		}	 
 		
 	  private void getLookupFields(){
-		  ObjectToLookup = getUserInput("\n Enter object api name to lookup (Case sensitive) : ");
-		  String FieldToSearch = getUserInput("\n Enter field api name to search with (Case sensitive) : ");
-	      String addFilterCriteria = getUserInput("\n If this object has lot of data, please enter an additional criteria to add in search soql: (ex: Country__c like '%US%'):  ");
-	      
+  
 	      // Set query batch size
           partnerConnection.setQueryOptions(2000);
-          //check recordcount 
-         
+        
           // SOQL query to use
           String soqlQuery = "SELECT Id," + FieldToSearch + " FROM " + ObjectToLookup;
+          if (SecondFieldToSearch != null && !SecondFieldToSearch.equals("")){
+        	  soqlQuery = "SELECT Id," + FieldToSearch + "," + SecondFieldToSearch + " FROM " + ObjectToLookup;
+          }
+          
           if (addFilterCriteria != null && !addFilterCriteria.equals("")){
         	  soqlQuery = soqlQuery + " where " + addFilterCriteria;
           }
           soqlQuery = soqlQuery + " limit 100000";
-          
-         // System.out.println(soqlQuery);
+          System.out.println(soqlQuery);
           // Make the query call and get the query results
           QueryResult qr;
           try {
@@ -190,12 +328,36 @@ public class vlookup {
 	          int loopCount = 0;
 	          // Loop through the batches of returned results
 	          while (!done) {
-	                System.out.println("\n Querying data .." + loopCount++);
+	                StatusLabel.setText("\n Querying data .." + loopCount++);
 	                SObject[] records = qr.getRecords();
 	                // Process the query results
 	                for (int i = 0; i < records.length; i++) {
 	                	SObject sobj = records[i];
-	                    inputMap.put(sobj.getField("Id"), sobj.getField(FieldToSearch));
+	                    if (SecondFieldToSearch != null && !SecondFieldToSearch.equals("")){
+	                    	String fieldvalue1 = "";
+	                    	String fieldvalue2 = "";
+	                    	if (sobj.getField(FieldToSearch) != null)
+	                    		fieldvalue1 = sobj.getField(FieldToSearch).toString();
+	                    	if (sobj.getField(SecondFieldToSearch) != null)
+	                    		fieldvalue2 = sobj.getField(SecondFieldToSearch).toString();
+	                    	if (casesensitive == "Y"){
+	                    		inputMap.put(sobj.getField("Id"), fieldvalue1.toUpperCase() + fieldvalue2.toUpperCase());
+	                    	}
+	                    	else
+	                    		inputMap.put(sobj.getField("Id"), fieldvalue1 + fieldvalue2);	                    	
+	                    }
+	                    else {
+	                    	if (casesensitive == "Y"){
+	                    		if (sobj.getField(FieldToSearch) != null){
+	                    			inputMap.put(sobj.getField("Id"), sobj.getField(FieldToSearch).toString().toUpperCase());
+	                    		//	System.out.println(sobj.getField(FieldToSearch).toString().toUpperCase());
+	                    		}
+	                    			
+	                    	}
+	                    	else
+	                    		inputMap.put(sobj.getField("Id"), sobj.getField(FieldToSearch));
+	                    }
+	                    	
 	                }
 	                if (qr.isDone()) {
 	                      done = true;
@@ -205,7 +367,7 @@ public class vlookup {
 	              }
 		}
 		catch (ConnectionException e1) {
-			System.out.println("Object and field details entered are incorrect. Please recheck");
+			StatusLabel.setText("Object and field details entered are incorrect. Please recheck");
 			e1.printStackTrace();
 		} 
 		
@@ -240,7 +402,7 @@ public class vlookup {
 	  private void updateOutputData(){
 
 		    String line = "";
-	    
+   
 		    Path p = Paths.get(csvFile); 
 			List<String> fileContent;
 			try {
@@ -254,14 +416,17 @@ public class vlookup {
 		                String inputfieldvalue = "";
 		                if (inputdata.length >= inputSearchNumber){
 			                if (inputdata[inputSearchNumber] != null && !inputdata[inputSearchNumber].equals("")){
-				                inputfieldvalue = inputdata[inputSearchNumber].replace("\"","");
-				                System.out.println("Input field = " + inputfieldvalue + " " + getKeyByValue(inputMap, inputdata[inputSearchNumber].toString().replace("\"","")));
+				                inputfieldvalue = inputdata[inputSearchNumber].toString().replace("\"","");
+				                if (casesensitive == "Y"){
+				                	inputfieldvalue = inputfieldvalue.toUpperCase();
+				                }
+				            //    System.out.println("Input field = " + inputfieldvalue + " " + getKeyByValue(inputMap, inputfieldvalue));
 				                if (inputdata[inputSearchNumber] != null && inputdata[inputSearchNumber] != ""){
 				                	if (i == 0){
 					                	fileContent.set(i, line + "," + ObjectToLookup + ".Id");		                		
 				                	}
 				                	else
-					                	fileContent.set(i, line + "," + getKeyByValue(inputMap, inputdata[inputSearchNumber].toString().replace("\"","")));
+					                	fileContent.set(i, line + "," + getKeyByValue(inputMap, inputfieldvalue));
 				                }
 			                }
 		                }
@@ -269,9 +434,11 @@ public class vlookup {
 				    }
 				}
 			Files.write(p, fileContent, StandardCharsets.UTF_8);
+			StatusLabel.setText("Data Extraction complete!");
 			}
 			catch(IOException e){
 				System.out.println("\n Unable to open file and update it. Please check if Input file is correctly populated.");
+				StatusLabel.setText("Error. Please check if Input file is open in another application. Else try after saving the file in UTF-8 format once");
 				e.printStackTrace();
 			}
 
